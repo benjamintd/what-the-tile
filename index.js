@@ -14,11 +14,9 @@ var map = new mapboxgl.Map({
 
 var geocoder = new MapboxGeocoder({
   accessToken: mapboxgl.accessToken
-})
+});
 
 map.addControl(geocoder);
-
-
 
 map.on('load', () => {
   map.addSource('tiles-geojson', {
@@ -82,6 +80,7 @@ map.on('click', (e) => {
   features = map.queryRenderedFeatures(e.point, {layers: ['tiles-shade']});
   console.log(features)
   copyToClipboard(features[0].properties.quadkey)
+  showSnackbar()
 })
 
 function updateGeocoderProximity() {
@@ -172,12 +171,18 @@ function getTileCenterFeature(tile) {
   };
 }
 
-
-function copyToClipboard (str) {
+function copyToClipboard(str) {
   const el = document.createElement('textarea');
   el.value = str;
   document.body.appendChild(el);
   el.select();
   document.execCommand('copy');
   document.body.removeChild(el);
-};
+}
+
+
+function showSnackbar() {
+    var x = document.getElementById('snackbar');
+    x.className = 'show';
+    setTimeout(function(){ x.className = x.className.replace('show', ''); }, 2000);
+}
