@@ -15,7 +15,7 @@
   },
   "scripts": {
     "build": "browserify index.js -o bundle.js",
-    "start": "budo index.js:bundle.js --live"
+    "dev": "budo index.js:bundle.js --live"
   },
   "repository": {
     "type": "git",
