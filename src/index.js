@@ -78,7 +78,6 @@ map.on('moveend', update);
 
 map.on('click', (e) => {
   features = map.queryRenderedFeatures(e.point, {layers: ['tiles-shade']});
-  console.log(features)
   copyToClipboard(features[0].properties.quadkey)
   showSnackbar()
 })

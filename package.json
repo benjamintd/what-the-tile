@@ -14,8 +14,8 @@
     "budo": "^11.3.2"
   },
   "scripts": {
-    "build": "browserify index.js -o bundle.js",
-    "dev": "budo index.js:bundle.js --live"
+    "build": "browserify src/index.js -o static/bundle.js",
+    "dev": "budo src/index.js --live --dir static"
   },
   "repository": {
     "type": "git",
