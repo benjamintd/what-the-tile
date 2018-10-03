@@ -1,0 +1,30 @@
+{
+  "name": "what-the-tile",
+  "version": "1.0.0",
+  "description": "See where are tiles for each zoom level.",
+  "main": "index.js",
+  "dependencies": {
+    "@mapbox/mapbox-gl-geocoder": "^2.3.0",
+    "@mapbox/tile-cover": "^3.0.2",
+    "@mapbox/tilebelt": "^1.0.1",
+    "browserify": "^16.2.3",
+    "mapbox-gl": "^0.49.0"
+  },
+  "devDependencies": {
+    "budo": "^11.3.2"
+  },
+  "scripts": {
+    "build": "browserify index.js -o bundle.js",
+    "start": "budo index.js:bundle.js --live"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benjamintd/what-the-tile.git"
+  },
+  "author": "benjamintd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benjamintd/what-the-tile/issues"
+  },
+  "homepage": "https://github.com/benjamintd/what-the-tile#readme"
+}
