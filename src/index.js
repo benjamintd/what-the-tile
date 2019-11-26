@@ -26,7 +26,7 @@ class QuadkeySearchControl {
         this._container.innerHTML = `
           <div id='tilesearch'>
             Quadkey search:
-            <span id='editable' contenteditable='true'>12</span>
+            <input id='editable'></input>
             <button id='search'>Search</button>
           </div>
         `;
@@ -162,14 +162,11 @@ function getExtentsGeom() {
 // bind op to search button, top left
 document.getElementById('search').onclick = function navToQuadkey() {
   const button = document.getElementById('search');
-  console.log(button.parentElement.firstElementChild.textContent);
-  console.log(tilebelt.quadkeyToTile(button.parentElement.firstElementChild.textContent));
-
   try {
     // convert qk to a tile to leverage helper func
     const qkGeo = tilebelt.tileToGeoJSON(
       tilebelt.quadkeyToTile(
-        button.parentElement.firstElementChild.textContent.toString()));
+        button.parentElement.firstElementChild.value.toString()));
     const qkBbox = [qkGeo.coordinates[0][0], qkGeo.coordinates[0][2]];
     console.log(qkBbox);
     map.fitBounds(qkBbox, {padding: {top: 200, bottom: 200, left: 200, right: 200}});
