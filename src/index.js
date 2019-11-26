@@ -18,6 +18,31 @@ var geocoder = new MapboxGeocoder({
 
 map.addControl(geocoder);
 
+class QuadkeySearchControl {
+    onAdd(map) {
+        this._map = map;
+        this._container = document.createElement('div');
+        this._container.className = 'mapboxgl-ctrl';
+        this._container.innerHTML = `
+          <div id='tilesearch'>
+            Quadkey search:
+            <span id='editable' contenteditable='true'>12</span>
+            <button id='search'>Search</button>
+          </div>
+        `;
+        return this._container;
+    }
+
+    onRemove() {
+        this._container.parentNode.removeChild(this._container);
+        this._map = undefined;
+    }
+}
+
+var quadkeySearchControl = new QuadkeySearchControl();
+
+map.addControl(quadkeySearchControl, 'top-left');
+
 map.on('load', () => {
   map.addSource('tiles-geojson', {
     type: 'geojson',
@@ -133,6 +158,26 @@ function getExtentsGeom() {
     coordinates: [box]
   };
 }
+
+// bind op to search button, top left
+document.getElementById('search').onclick = function navToQuadkey() {
+  const button = document.getElementById('search');
+  console.log(button.parentElement.firstElementChild.textContent);
+  console.log(tilebelt.quadkeyToTile(button.parentElement.firstElementChild.textContent));
+
+  try {
+    // convert qk to a tile to leverage helper func
+    const qkGeo = tilebelt.tileToGeoJSON(
+      tilebelt.quadkeyToTile(
+        button.parentElement.firstElementChild.textContent.toString()));
+    const qkBbox = [qkGeo.coordinates[0][0], qkGeo.coordinates[0][2]];
+    console.log(qkBbox);
+    map.fitBounds(qkBbox, {padding: {top: 200, bottom: 200, left: 200, right: 200}});
+  } catch (e) {
+    // Bad quadkey?
+    console.log(e);
+  }
+};
 
 function getTileFeature(tile) {
   var quadkey = tilebelt.tileToQuadkey(tile);
