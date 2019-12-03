@@ -167,11 +167,14 @@ document.getElementById('search').onclick = function navToQuadkey() {
     const qkGeo = tilebelt.tileToGeoJSON(
       tilebelt.quadkeyToTile(
         button.parentElement.firstElementChild.value.toString()));
-    const qkBbox = [qkGeo.coordinates[0][0], qkGeo.coordinates[0][2]];
-    console.log(qkBbox);
-    map.fitBounds(qkBbox, {padding: {top: 200, bottom: 200, left: 200, right: 200}});
+
+    // move map viewport around the new tile
+    map.fitBounds(
+      [qkGeo.coordinates[0][0], qkGeo.coordinates[0][2]],
+      {padding: {top: 200, bottom: 200, left: 200, right: 200}});
+
   } catch (e) {
-    // Bad quadkey?
+    // TODO: make a new version of snackbar that says "bad quadkey"
     console.log(e);
   }
 };
@@ -198,6 +201,7 @@ function getTileCenterFeature(tile) {
   ];
 
   var quadkey = tilebelt.tileToQuadkey(tile);
+  var tileGeom = tilebelt.tileToGeoJSON(tile);
 
   return {
     type: 'Feature',
