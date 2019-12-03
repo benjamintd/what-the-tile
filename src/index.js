@@ -201,12 +201,16 @@ function getTileCenterFeature(tile) {
   ];
 
   var quadkey = tilebelt.tileToQuadkey(tile);
-  var tileGeom = tilebelt.tileToGeoJSON(tile);
+  var tileArea = turf.area(tilebelt.tileToGeoJSON(tile)); // area in sq meters
 
   return {
     type: 'Feature',
     properties: {
-      text: 'Tile: ' + JSON.stringify(tile) + '\nQuadkey: ' + quadkey + '\nZoom: ' + tile[2],
+      text: (
+        'Tile: ' + JSON.stringify(tile) +
+        '\nQuadkey: ' + quadkey +
+        '\nZoom: ' + tile[2] +
+        '\nArea: ' + Math.round(tileArea  / (1000**2)).toLocaleString() + ' sq. km'),
       quadkey: quadkey
     },
     geometry: {
